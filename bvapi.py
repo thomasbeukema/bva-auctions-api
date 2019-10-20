@@ -31,7 +31,7 @@ class bva_api:
             'password': self.password
         }
         url = self.base_url + 'tokenlogin'
-        response = requests.post(url, json=data)
+        response = requests.post(url, json=data, headers=self.request_headers)
 
         if response.status_code == 201:  # 201 equals success
             body = response.json()
@@ -45,6 +45,14 @@ class bva_api:
             self.request_headers['refreshToken'] = body['refreshToken']
             self.request_headers['X-CSRF-Token'] = body['csrfToken']
 
-            return True
+            return True  # success
         else:
+            return False  # failed
+
+    # logout deletes tokens from server
+    def logout(self):
+        url = self.base_url + 'logout'
+        response = requests.post(url, headers=self.request_headers)
+        if not response.ok:
             return False
+        return True
