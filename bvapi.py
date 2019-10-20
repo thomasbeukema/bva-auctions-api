@@ -23,7 +23,7 @@ class bva_api:
         self.request_headers['User-Agent'] = user_agent
 
     # login fetches tokens needed for protected endpoints
-    # returns True when successful, otherwise returns False
+    # returns True when successful, otherwise returns error msg
     def login(self):
         # set json body
         data = {
@@ -47,12 +47,21 @@ class bva_api:
 
             return True  # success
         else:
-            return False  # failed
+            return response.json()['message']  # failed
 
     # logout deletes tokens from server
     def logout(self):
         url = self.base_url + 'logout'
         response = requests.post(url, headers=self.request_headers)
         if not response.ok:
-            return False
+            return response.json()['message']
         return True
+
+    def get_auction(self, auction_id):
+        url = self.base_url + 'ext123/auction/{}'.format(auction_id)
+        response = requests.get(url, headers=self.request_headers)
+
+        if response.ok:
+            return response.json()
+        else:
+            return response.json()['message']
