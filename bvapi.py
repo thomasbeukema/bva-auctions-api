@@ -7,6 +7,7 @@ class bva_api:
 
     # Base URL for every API call
     base_url = "https://api-acc.bva-auctions.com/api/rest/"
+    base_url_no_acc = "https://api.bva-auctions.com/api/rest/"
     # Headers to include with every request
     request_headers = {
         'Accept': 'application/json',
@@ -57,11 +58,28 @@ class bva_api:
             return response.json()['message']
         return True
 
+    # get_auction retrieves auction details
+    # @param auction_id: the id of the auction
     def get_auction(self, auction_id):
         url = self.base_url + 'ext123/auction/{}'.format(auction_id)
         response = requests.get(url, headers=self.request_headers)
 
         if response.ok:
             return response.json()
+        else:
+            return response.json()['message']
+
+    # get_auction_categories retrieves the (sub)category
+    # of the auction
+    # @param auction_id: the id of the auction
+    def get_auction_categories(self, auction_id):
+        url = self.base_url_no_acc + \
+            'ext123/auction/{}/nl/lotcategories/true/true'.format(auction_id)
+        response = requests.get(url, headers=self.request_headers)
+
+        print(url)
+
+        if response.ok:
+            return response.text
         else:
             return response.json()['message']
