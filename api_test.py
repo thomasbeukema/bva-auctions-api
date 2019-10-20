@@ -4,4 +4,4 @@ from credentials import *  # contains username en pass
 api = bva_api(USERNAME, PASSWORD)  # from credentials
 print(api.login())
 
-print(api.get_auction_categories(43483))
+print(api.get_auction_locations(43483))

@@ -83,3 +83,15 @@ class bva_api:
             return response.text
         else:
             return response.json()['message']
+
+    # get_auction_locations retrieves the locations
+    # of the auction, 'Online' if delivered at home
+    # @param auction_id: the id of the auction
+    def get_auction_locations(self, auction_id):
+        url = self.base_url + 'ext123/auction/{}/locations'.format(auction_id)
+        response = requests.get(url, headers=self.request_headers)
+
+        if response.ok:
+            return response.json()
+        else:
+            return response.json()['message']
