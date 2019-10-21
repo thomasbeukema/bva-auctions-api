@@ -5,4 +5,4 @@ from pprint import pprint
 api = bva_api(USERNAME, PASSWORD)  # from credentials
 pprint(api.login())
 
-pprint(api.get_lot(13669709))
+pprint(api.get_lot_by_number(43687, 12))
