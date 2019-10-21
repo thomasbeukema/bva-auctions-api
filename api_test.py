@@ -1,7 +1,8 @@
 from bvapi import bva_api
 from credentials import *  # contains username en pass
+from pprint import pprint
 
 api = bva_api(USERNAME, PASSWORD)  # from credentials
-print(api.login())
+pprint(api.login())
 
-print(api.get_auction_locations(43483))
+pprint(api.get_lot(13669709))
