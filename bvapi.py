@@ -2,6 +2,13 @@
 # This file is licensed under the MIT License. Please see LICENSE for more details.
 import requests
 
+""" 
+    bva_api
+
+    bva_api is an API wrapper for the BVA Auction API,
+    which can be found at https://api-acc.bva-auctions.com/api/docs/.
+"""
+
 
 class bva_api:
 
@@ -115,6 +122,17 @@ class bva_api:
         url = self.base_url_no_acc + \
             'ext123/lot/{}/{}{}/lotbynumber'.format(
                 auction_id, lot_number, lot_number_addition)
+        response = requests.get(url, headers=self.request_headers)
+
+        if response.ok:
+            return response.json()
+        else:
+            return response.json()['message']
+
+    # search searches for given term
+    def search(self, term, additional_query=''):
+        url = self.base_url_no_acc + \
+            'search?term={}{}'.format(term, additional_query)
         response = requests.get(url, headers=self.request_headers)
 
         if response.ok:
