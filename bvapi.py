@@ -95,3 +95,12 @@ class bva_api:
             return response.json()
         else:
             return response.json()['message']
+
+    def get_lot(self, lot_id):
+        url = self.base_url_no_acc + 'ext123/lot/{}'.format(lot_id)
+        response = requests.get(url, headers=self.request_headers)
+
+        if response.ok:
+            return response.json()
+        else:
+            return response.json()['message']
