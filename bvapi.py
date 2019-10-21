@@ -2,7 +2,7 @@
 # This file is licensed under the MIT License. Please see LICENSE for more details.
 import requests
 
-""" 
+"""
     bva_api
 
     bva_api is an API wrapper for the BVA Auction API,
@@ -139,3 +139,54 @@ class bva_api:
             return response.json()
         else:
             return response.json()['message']
+
+    # get_invoices retrieves a list of invoices
+    def get_invoices(self, limit=20, page_index=1):
+        url = self.base_url + \
+            '/ext123/invoices?limit={}&pageNumber={}'.format(limit, page_index)
+
+        response = requests.get(url, headers=self.request_headers)
+
+        if response.ok:
+            return response.json()
+        else:
+            return response.json()['message']
+
+    # get_from_invoice lets you retrieve certain data by invoice
+    def get_from_invoice(self, invoice_id, pdf=True, status=False, payment_url=False):
+        toReturn = []
+
+        if pdf:
+            url = self.base_url + \
+                'ext123/invoices/{}/pdf'.format(invoice_id)
+            response = requests.get(url, headers=self.request_headers)
+
+            print(url)
+
+            if response.ok:
+                toReturn.append(response.text)
+            else:
+                toReturn.append([False, response.json()])
+
+        if status:
+            url = self.base_url + \
+                'invoices/{}/status'.format(invoice_id)
+            response = requests.get(url, headers=self.request_headers)
+
+            if response.ok:
+                toReturn.append(response.json())
+            else:
+                toReturn.append([False, response.json()])
+
+        if payment_url:
+            url = self.base_url + \
+                'ext123/invoices/{}/paymenturl'.format(invoice_id)
+            response = requests.get(url, headers=self.request_headers)
+
+            if response.ok:
+                toReturn.append(response.json())
+            else:
+                print(response.json())
+                toReturn.append([False, response.json()])
+
+        return toReturn
