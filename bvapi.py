@@ -190,3 +190,20 @@ class bva_api:
                 toReturn.append([False, response.json()])
 
         return toReturn
+
+    # get_interestgroups retrieves a list of categories
+    # for every lot
+    def get_interestgroups(self, language=''):
+        url = self.base_url_no_acc + 'ext123/interestgroups'
+
+        if language == '':
+            url += '?language={}'.format(self.language)
+        else:
+            url += '?language={}'.format(self.language)
+
+        response = requests.get(url, headers=self.request_headers)
+
+        if response.ok:
+            return response.json()
+        else:
+            return response.json()['message']
