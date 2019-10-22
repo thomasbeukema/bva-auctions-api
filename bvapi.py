@@ -140,6 +140,16 @@ class bva_api:
         else:
             return response.json()['message']
 
+    def lot_summaries(self, category):
+        url = self.base_url_no_acc + \
+            'lot-summaries?fq=interestGroup:{}'.format(category)
+        response = requests.get(url, headers=self.request_headers)
+
+        if response.ok:
+            return response.json()
+        else:
+            return response.json()['message']
+
     # get_invoices retrieves a list of invoices
     def get_invoices(self, limit=20, page_index=1):
         url = self.base_url + \
