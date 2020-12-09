@@ -65,6 +65,19 @@ class bva_api:
             return response.json()['message']
         return True
 
+    # get_current_auctions retrieves all current auctions
+    # @param page: the page of the auctions list. Defaults to 1.
+    # @param pagesize: the size of the auction list page. Defaults to 50.
+    def get_current_auctions(self, page=1, page_size=50):
+        url = self.base_url + 'ext123/auctions/bycurrent/paged'
+        payload = {'page': page, 'pageSize': page_size}
+        response = requests.get(url, headers=self.request_headers, params=payload)
+
+        if response.ok:
+            return response.json()
+        else:
+            return response.json()['message']
+
     # get_auction retrieves auction details
     # @param auction_id: the id of the auction
     def get_auction(self, auction_id):
