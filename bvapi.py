@@ -116,6 +116,18 @@ class bva_api:
         else:
             return response.json()['message']
 
+    # get_auction_lots retrieves the lots of an auction
+    # @param auction_id: the id of the auction
+    def get_auction_lots(self, auction_id):
+        url = self.base_url + 'ext123/auction/{}/lots'.format(auction_id)
+        response = requests.get(url, headers=self.request_headers)
+
+        if response.ok:
+            return response.json()
+        else:
+            return response.json()['message']
+
+
     # get_lot_by_number retrieves a lot with lot_id
     # @param lot: the id of the lot
     def get_lot(self, lot_id):
